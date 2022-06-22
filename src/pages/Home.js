@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
-  
+import AddTodo from '../component/AddTodo.js';
+import Todos from '../component/todos.js'; 
+import "./Home.css";
+
+
+
+
+
 class Home extends Component {
   // A default state of this component with an empty list of todos.
   constructor() {
     super();
     this.state = {
       // create your empty list here call it todos.
+      todos:[]  
     };
+
   }
   // the addTodo function simply creates a new array that includes the user submitted todo item and then
   // updates the state with the new list.
@@ -18,17 +27,34 @@ class Home extends Component {
     // dealing with a larger data sensitive project.
     todo.id = Math.random();
     // An array that contains the current array and the new todo item
-    let new_list = [...this.state.todos, todo];
+   // let new_list =[]
+    if(this.state.todos.find( t=> t.content === todo.content)){
+      return 
+    }
+     let new_list = [...this.state.todos, todo];
     // Updates the local state with the new array.
     this.setState({
       todos: new_list,
     });
   };
+  deleteTodo = (id) => {
+    const todos = this.state.todos.filter((todo) => {
+      return todo.id !== id;
+    });
+    this.setState({
+      todos: todos,
+    });
+};
   render() {
     return (
       <div className="Home">
-        <h1>Todo's </h1>
-        <p> Replace this</p>
+        <h1> Todo List</h1> 
+        
+        <div> Work in v Progess</div> 
+
+        <AddTodo addTodo={this.addTodo} />
+        <Todos todos={this.state.todos} deleteTodo={this.deleteTodo} />
+        
       </div>
     );
   }
